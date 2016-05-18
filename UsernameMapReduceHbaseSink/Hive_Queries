@@ -1,0 +1,45 @@
+select (u.req_time) as time 
+from user_logs u
+group by u.req_time
+order by time desc;
+
+
+select (u.req_date) as date1 
+from user_logs u
+group by u.req_date
+order by date1 desc;
+
+// Count the # of occurrence 
+
+select (u.req_date) as date1,
+count(1) as dv
+from user_logs u
+group by u.req_date
+order by date1 desc;
+
+// count access (entries) between a time range in desc order
+
+select u.req_time as time, count(1) as count 
+from user_logs u
+where u.req_time between '00:02:52' and '06:00:00'
+group by u.req_time
+order by time desc
+
+// count number of users at particular time and between a time range
+
+select u.req_time as time, count(u.user_name) as users
+from user_logs u
+where u.req_time between '00:00:00' and '07:59:59'
+group by u.req_time
+order by time desc;
+
+
+// count number of unique users who access the application at particular time and between a time range 
+
+select u.req_time as time, count(distinct(u.user_name)) as users
+from user_logs u
+where u.req_time between '00:00:00' and '07:59:59'
+group by u.req_time
+order by time desc
+limit 10
+
